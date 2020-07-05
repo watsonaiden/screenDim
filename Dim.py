@@ -4,6 +4,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 import sys
+from tkinter import *
 
 
 class Window(QMainWindow):
@@ -23,10 +24,7 @@ class Window(QMainWindow):
         self.setWindowFlag(Qt.Tool)
 
         # makes window semi transparent
-        self.setWindowOpacity(.8)
-
-        # setting  the geometry of window
-        self.setGeometry(60, 60, 600, 400)
+        self.setWindowOpacity(0)
 
         # makes window black
         self.setStyleSheet("background-color:black;")
@@ -34,10 +32,33 @@ class Window(QMainWindow):
         # show all the widgets
         self.show()
 
-App = QApplication(sys.argv)
+    def changeBrightess(self, brightness):
+        self.setWindowOpacity(brightness)
 
-# create the instance of our Window 
+def addslider(master):
+    w = tkinter.Scale(master, from_=0, to=100, orient=tkinter.HORIZONTAL)
+    w.pack()
+    return w
+
+
+def sel():
+   selection = "Value = " + str(var.get())
+   label.config(text = selection)
+
+
+def sliderChange(event):
+    brightness = scale.get()/100
+    window.changeBrightess(brightness)
+
+layer = QApplication(sys.argv)
+root = Tk()
+var = DoubleVar()
+scale = Scale( root, variable = var,orient=HORIZONTAL, command = sliderChange)
+scale.pack(anchor=CENTER)
+
+label = Label(root)
+label.pack()
 window = Window()
-
-# start the app 
-sys.exit(App.exec()) 
+# start the app
+root.mainloop()
+sys.exit(layer.exec())
