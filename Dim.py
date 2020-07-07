@@ -50,6 +50,9 @@ def sliderChange(event):
     brightness = scale.get()/100
     window.changeBrightess(brightness)
 
+def on_closing(): #if tkinter window is closed exit program
+    exit()
+
 layer = QApplication(sys.argv)
 root = Tk()
 var = DoubleVar()
@@ -59,6 +62,9 @@ scale.pack(anchor=CENTER)
 label = Label(root)
 label.pack()
 window = Window()
-# start the app
+
+# start the tkinter window
+root.protocol("WM_DELETE_WINDOW", on_closing) # see on_closing function
 root.mainloop()
+
 sys.exit(layer.exec())
